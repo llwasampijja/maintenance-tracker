@@ -10,6 +10,7 @@ class UserViewSet(ModelViewSet):
     """API Endpoint for viewing and editting user details"""
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
+    http_method_names = ['put', 'patch', 'get', 'delete']
 
 class GroupViewSet(ModelViewSet):
     """API Endpoint for viewing and editting group details"""
