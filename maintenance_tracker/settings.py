@@ -74,12 +74,29 @@ WSGI_APPLICATION = 'maintenance_tracker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if os.environ.get("APP_ENV","Development") == "Development":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME':os.environ.get('DB_NAME','maintainance_db'),
+            'USER':os.environ.get('DB_USER','postgres'),
+            'PASSWORD':os.environ.get('DB_PASS','james'),
+            'HOST':'localhost',
+            'PORT':'5432'
+        }
     }
-}
+if os.environ.get("APP_ENV") == "Production":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME':os.environ.get('DB_NAME','maintainance_db'),
+            'USER':os.environ.get('DB_USER','postgres'),
+            'PASSWORD':os.environ.get('DB_PASS','james'),
+            'HOST':'localhost',
+            'PORT':'5432'
+        }
+    }
+
 
 
 # Password validation
