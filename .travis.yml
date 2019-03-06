@@ -24,4 +24,7 @@ before_script:
   # - python manage.py collectstatic
 
 script:
-  - python manage.py test
+  - coverage run manage.py test
+
+after_success:
+  - coveralls
