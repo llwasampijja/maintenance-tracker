@@ -3,20 +3,25 @@ language: python
 python:
   - 3.5.0
 
-services: postgresql
+env: # => 4
+  -DJANGO=1.8 DB=mysql
 
-addons:
-  postgresql: "9.5"
+# services: postgresql
+
+# addons:
+#   postgresql: "9.5"
 
 install:
   - pip install -r requirements.txt
+  
 
 before_script:
-  - psql -c "CREATE DATABASE test_db;" -U postgres
+  # - psql -c "CREATE DATABASE test_db;" -U postgres
+  - mysql -e 'create database test;' -u root
   # Suppresses all user prompts. An example prompt is asking about removing stale content types.
-  - python manage.py migrate --noinput
+  # - python manage.py migrate --noinput
   # collects all static files in the application like css files
-  - python manage.py collectstatic
+  # - python manage.py collectstatic
 
 script:
-  - python manage.py collectstatic test
+  - python manage.py test
