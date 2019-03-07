@@ -22,7 +22,7 @@ Including another URLconf
 
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from auth.views import GroupViewSet, UserViewSet, UserRegisterViewSet
+from auth.views import UserViewSet, UserRegisterViewSet
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -30,8 +30,6 @@ from django.views.decorators.csrf import csrf_exempt
 router = DefaultRouter()
 router.register('api/v1/auth/register', UserRegisterViewSet)
 router.register('api/v1/users', UserViewSet)
-router.register('api/v1/groups', GroupViewSet)
-
 
 urlpatterns = [
     path('', include(router.urls)),
