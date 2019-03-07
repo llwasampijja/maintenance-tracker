@@ -74,26 +74,26 @@ WSGI_APPLICATION = 'maintenance_tracker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-if os.environ.get("APP_ENV","Development") == "Development":
+if os.environ.get("APP_ENV") == "Development":
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME':os.environ.get('DB_NAME','maintainance_db'),
-            'USER':os.environ.get('DB_USER','postgres'),
-            'PASSWORD':os.environ.get('DB_PASS','james'),
-            'HOST':'localhost',
-            'PORT':'5432'
+            'NAME':os.environ.get('DB_NAME'),
+            'USER':os.environ.get('DB_USER'),
+            'PASSWORD':os.environ.get('DB_PASS'),
+            'HOST':os.environ.get('DB_HOST'),
+            'PORT':os.environ.get('DB_PORT')
         }
     }
 if os.environ.get("APP_ENV") == "Production":
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME':os.environ.get('DB_NAME','maintainance_db'),
-            'USER':os.environ.get('DB_USER','postgres'),
-            'PASSWORD':os.environ.get('DB_PASS','james'),
-            'HOST':'localhost',
-            'PORT':'5432'
+            'NAME':os.environ.get('DB_NAME'),
+            'USER':os.environ.get('DB_USER'),
+            'PASSWORD':os.environ.get('DB_PASS'),
+            'HOST':os.environ.get('DB_HOST'),
+            'PORT':os.environ.get('DB_PORT')
         }
     }
 
