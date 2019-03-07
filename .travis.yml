@@ -14,7 +14,7 @@ install:
 before_script:
   - psql -c "CREATE DATABASE test_db;" -U postgres
   # Suppresses all user prompts. An example prompt is asking about removing stale content types.
-  - python manage.py migrate --noinput
+  # - python manage.py migrate --noinput
   # collects all static files in the application like css files
   # - python manage.py collectstatic --noinput
 
