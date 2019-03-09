@@ -4,6 +4,7 @@ from rest_framework.validators import UniqueValidator
 from maintainance_requests.models import MaintainanceRequest
 
 
+
 class UserSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = User
