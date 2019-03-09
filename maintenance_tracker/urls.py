@@ -34,6 +34,5 @@ router.register('api/v1/requests', MaintainanceRequestViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    # path('api/v1/', include('maintainance_requests.urls')),
     path('api/v1/auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

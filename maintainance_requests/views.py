@@ -18,8 +18,9 @@ class MaintainanceRequestViewSet(ModelViewSet):
     """API Endpoint for viewing and editting user details"""
     queryset = MaintainanceRequest.objects.all().order_by('-date_posted')
     serializer_class = MaintainanceRequestSerializer
-    # authentication_classes = (SessionAuthentication, BasicAuthentication)
-    # permission_classes = (IsAuthenticated,)
 
-    # def perform_create(self, serializer):
-    #     serializer.save(author=self.request.user)
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(author=self.request.user)

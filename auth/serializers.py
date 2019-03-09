@@ -3,10 +3,24 @@ from rest_framework.serializers import HyperlinkedModelSerializer, PrimaryKeyRel
 from rest_framework.validators import UniqueValidator
 from maintainance_requests.models import MaintainanceRequest
 
+
 class UserSerializer(HyperlinkedModelSerializer):
-    # requests = PrimaryKeyRelatedField(many=True, queryset=MaintainanceRequest.objects.all())
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'password', 'first_name', 'last_name', 'date_joined')
-        extra_kwargs = {'email': {'allow_blank': False, 'required': True, 'validators':[UniqueValidator(queryset=User.objects.all())]}}
-        
+        fields = ('url', 'username', 'email', 'password',
+                  'first_name', 'last_name', 'date_joined')
+        extra_kwargs = {'email': {'allow_blank': False, 'required': True, 'validators': [
+            UniqueValidator(queryset=User.objects.all())]}}
+
+    def create(self, validated_data):
+        username = validated_data['username']
+        email = validated_data['email']
+        password = validated_data['password']
+
+        user_obj = User(
+            username=username,
+            email=email
+        )
+        user_obj.set_password(password)
+        user_obj.save()
+        return user_obj
