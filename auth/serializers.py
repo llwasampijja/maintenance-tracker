@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework.serializers import HyperlinkedModelSerializer, PrimaryKeyRelatedField
 from rest_framework.validators import UniqueValidator
+from maintainance_requests.models import MaintainanceRequest
+
 
 
 class UserSerializer(HyperlinkedModelSerializer):
