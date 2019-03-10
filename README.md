@@ -1,5 +1,5 @@
 # Maintenance Tracker
-[![Build Status](https://travis-ci.org/fodongkara/maintenance-tracker.svg?branch=master)](https://travis-ci.org/fodongkara/maintenance-track
+[![Build Status](https://travis-ci.org/fodongkara/maintenance-tracker.svg?branch=master)](https://travis-ci.org/fodongkara/maintenance-tracker)
 
 
 ## Introduction
