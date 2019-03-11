@@ -12,7 +12,6 @@ class UserTests(APITestCase):
         self.client.post(self.register_url, user_data2, format='json')
         self.client.login(username='lauren', password='password#1')
 
-
     def test_login_user(self):
         """
         Test if a user logs in successifully
