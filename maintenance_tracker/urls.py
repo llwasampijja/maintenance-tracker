@@ -23,12 +23,14 @@ Including another URLconf
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from auth.views import UserViewSet, UserRegisterViewSet
+from maintainance_requests.views import MaintainanceRequestViewSet
 
 
 
 router = DefaultRouter()
 router.register('api/v1/auth/register', UserRegisterViewSet)
 router.register('api/v1/users', UserViewSet)
+router.register('api/v1/requests', MaintainanceRequestViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
