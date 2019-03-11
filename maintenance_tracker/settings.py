@@ -91,6 +91,15 @@ if os.environ.get("APP_ENV") == "Development":
             'PORT':os.environ.get('DB_PORT')
         }
     }
+    
+if os.environ.get("APP_ENV") == "Testing":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+
 if os.environ.get("APP_ENV") == "Production":
     DATABASES = {
         'default': {
