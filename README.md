@@ -1,7 +1,9 @@
 # Maintenance Tracker
-[![Build Status](https://travis-ci.org/fodongkara/maintenance-tracker.svg?branch=master)](https://travis-ci.org/fodongkara/maintenance-tracker)
 
+[![Coverage Status](https://coveralls.io/repos/github/3Nakajugo/maintenance-tracker/badge.svg?branch=master)](https://coveralls.io/github/3Nakajugo/maintenance-tracker?branch=master)
 
+[![Build Status](https://travis-ci.org/fodongkara/maintenance-tracker.svg?branch=develop)](https://travis-ci.org/fodongkara/maintenance-tracker)
+=======
 ## Introduction
 
 Maintenance Tracker App is an application that provides users with the ability to reach out to the operations or repairs department regarding issues that need reapairs or maintenance. users make requests and they are able to track the status of their request
