@@ -159,4 +159,4 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-django_heroku.settings(locals())
+django_heroku.settings(locals(), test_runner=False)
