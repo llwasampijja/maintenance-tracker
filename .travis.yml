@@ -21,7 +21,8 @@ before_script:
   # - python manage.py collectstatic --noinput
 
 script:
-  - python manage.py test
+  # - python manage.py test
+  - coverage run --source=auth, maintainance_requests manage.py test
 
 after_script:
   - coveralls
