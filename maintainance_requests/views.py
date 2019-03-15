@@ -18,12 +18,3 @@ class MaintainanceRequestViewSet(ModelViewSet):
 
     def perform_update(self, serializer):
         serializer.save(author=self.request.user)
-
-
-
-
-# class UserListView(ListAPIView):
-#     queryset = MaintainanceRequest.objects.all()
-#     serializer_class = MaintainanceRequestSerializer
-#     filter_backends = (SearchFilter,)
-#     search_fields = ('request_title', 'request_description', 'author')
