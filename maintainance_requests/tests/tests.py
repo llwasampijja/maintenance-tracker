@@ -16,14 +16,14 @@ class MaintainanceRequestsTests(APITestCase):
         self.assertEqual(login_response.status_code, status.HTTP_200_OK)
         self.test_token = login_response.data.get("token")
         self.auth_header=dict(Authorization='JWT ' + self.test_token),
-        request_data = {'request_title': 'Test case one', 'request_description':'This is test case one'}
+        request_data = {'request_title': 'Test case one', 'comment':'testcomment', 'request_description':'This is test case one'}
         self.client.post(self.requests_url, data=request_data, headers=self.auth_header, format='json')
 
     def test_create_maintainance_request(self):
         """
         Make sure a user adds a maintainance request successifully
         """  
-        post_data = {'request_title': 'test0', 'request_description':'test0@bolon.com'}
+        post_data = {'request_title': 'test0', 'comment':'testcomment','request_description':'test0@bolon.com'}
         response = self.client.post(self.requests_url, data=post_data, headers=self.auth_header, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -32,7 +32,7 @@ class MaintainanceRequestsTests(APITestCase):
         Make sure a user deletes a maintainance request by id successifully
         """  
         request_url = self.requests_url + "2/"
-        data = {'request_title': 'test0', 'request_description':'test0@bolon.com'}
+        data = {'request_title': 'test0','comment':'testcomment', 'request_description':'test0@bolon.com'}
         self.client.post(self.requests_url, data=data, headers=self.auth_header, format='json')
         response = self.client.delete(request_url, headers=self.auth_header, format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
@@ -58,7 +58,7 @@ class MaintainanceRequestsTests(APITestCase):
         Make sure a user gets a maintainance request by id successifully
         """  
         request_url = self.requests_url + "1/"
-        data = {'request_title': 'test0', 'request_description':'test0@bolon.com'}
+        data = {'request_title': 'test0','comment':'testcomment', 'request_description':'test0@bolon.com'}
         self.client.post(self.requests_url, data, format='json')
         response = self.client.get(request_url, headers=self.auth_header, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
