@@ -12,6 +12,8 @@ class MaintainanceRequest(models.Model):
     request_title = models.CharField(max_length=100)
     request_description = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
+    comment = models.TextField(default=None)
+    status = models.CharField(max_length=10, default='pending')
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
 
