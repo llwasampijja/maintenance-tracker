@@ -7,8 +7,10 @@ class MaintainanceRequestsTests(APITestCase):
     register_url = '/api/v1/auth/register/'
     def setUp(self):
         user_data = {'username': 'lauren', 'email':'lauren@bolon.com', 'password':'password#1'}
+        self.status = {"status":"rejected"}
         self.client.post(self.register_url, user_data, format='json')
         user_data2 = {'username': 'test0', 'email':'test0@bolon.com', 'password':'password#1'}
+        # user.object.create_superuser()
         self.client.post(self.register_url, user_data2, format='json')
         self.client.login(username='lauren', password='password#1')
         login_credentials = {'username': 'lauren', 'password':'password#1'}
@@ -70,3 +72,11 @@ class MaintainanceRequestsTests(APITestCase):
         request_url = self.requests_url + "5/"
         response = self.client.get(request_url, headers=self.auth_header, format='json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+    
+    # def test_update_status(self):
+    #     """
+    #     superuser updates status
+    #     """
+
+    #     request_url = self.requests_url + "5/"
+
