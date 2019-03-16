@@ -17,7 +17,6 @@ class MaintainanceRequestViewSet(ModelViewSet):
         serializer.save(author=self.request.user)
         
     def list(self, request):
-        print(request.user.is_superuser)
         if request.user.is_superuser:
             permission_classes = (IsAdminUser,)
             queryset = MaintainanceRequest.objects.all()
