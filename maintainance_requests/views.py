@@ -17,7 +17,6 @@ class MaintainanceRequestViewSet(ModelViewSet):
     def perform_update(self, serializer):
         print(self.request.user.is_superuser)
         if self.request.user.is_superuser and "status" in self.request.data:
-            print(repr(self.request.data))
             serializer.save()
         elif "status" in self.request.data:
             return Response({'Message': 'You have successfully register'})
