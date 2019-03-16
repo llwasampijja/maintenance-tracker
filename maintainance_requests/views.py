@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from maintainance_requests.models import MaintainanceRequest
-from maintainance_requests.serializers import MaintainanceRequestSerializer 
+from maintainance_requests.serializers import MaintainanceRequestSerializer
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAdminUser
+from rest_framework.response import Response
+
 
 class MaintainanceRequestViewSet(ModelViewSet):
     """API Endpoint for viewing and editting user details"""
@@ -12,4 +15,12 @@ class MaintainanceRequestViewSet(ModelViewSet):
         serializer.save(author=self.request.user)
 
     def perform_update(self, serializer):
-        serializer.save(author=self.request.user)
+        print(self.request.user.is_superuser)
+        if self.request.user.is_superuser and "status" in self.request.data:
+            print(repr(self.request.data))
+            serializer.save()
+        elif "status" in self.request.data:
+            return Response({'Message': 'You have successfully register'})
+        elif not self.request.user.is_superuser:
+            serializer.save(author=self.request.user)
+            
