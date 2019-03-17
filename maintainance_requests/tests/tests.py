@@ -129,4 +129,26 @@ class MaintainanceRequestsTests(APITestCase):
             request_url, data=self.status, headers=self.auth_header, format='json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         
+    def test_invalid_status(self):
+        """ 
+        tests update with invalid status
+        """
+        invalid_status = {"status":"good"}
+        self.client.login(username='edna', password='password')
+        admin_credentials = { "username":"edna", "password":"password"}
+        login_response = self.client.post(
+            self.login_url, admin_credentials, format='json')
+        self.assertEqual(login_response.status_code, status.HTTP_200_OK)
+        self.test_token = login_response.data.get("token")
+        self.auth_header = dict(Authorization='JWT ' + self.test_token),
+
+        request_url = self.requests_url + "1/"
+        post_data = {'request_title': 'test0', 'comment': 'testcomment',
+                     'request_description': 'test0@bolon.com'}
+        response = self.client.post(
+            self.requests_url, data=post_data, headers=self.auth_header, format='json')
+        response = self.client.patch(
+            request_url, data=invalid_status, headers=self.auth_header, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
 
