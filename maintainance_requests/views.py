@@ -6,6 +6,7 @@ from rest_framework.filters import SearchFilter
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 class MaintainanceRequestViewSet(ModelViewSet):
     """API Endpoint for viewing and editting user details"""
@@ -26,10 +27,14 @@ class MaintainanceRequestViewSet(ModelViewSet):
         elif not self.request.user.is_superuser:
             serializer.save(author=self.request.user)
         
+        serializer.save(author=self.request.user)
+
     def list(self, request):
         if request.user.is_superuser:
-            permission_classes = (IsAdminUser,)
             queryset = MaintainanceRequest.objects.all()
-            serializer = MaintainanceRequestSerializer(queryset, many=True,context={'request': request})
-            return Response(serializer.data)
-        return Response('Un Authorised, you need admin rights')
+        else:
+            user = request.user
+            queryset = MaintainanceRequest.objects.filter(author=user)
+        serializer = MaintainanceRequestSerializer(queryset, many=True,context={'request': request})
+        return Response(serializer.data)
+        
