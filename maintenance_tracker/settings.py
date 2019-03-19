@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import django_heroku
+import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -119,7 +120,17 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+JWT_AUTH = {
+   # how long the original token is valid for
+   'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2),
 
+   # allow refreshing of tokens
+   'JWT_ALLOW_REFRESH': True,
+
+   # this is the maximum time AFTER the token was issued that
+   # it can be refreshed.  exprired tokens can't be refreshed.
+   'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
