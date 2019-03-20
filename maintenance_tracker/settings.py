@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import django_heroku
+import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -101,19 +102,6 @@ if os.environ.get("APP_ENV") == "Testing":
         }
     }
 
-if os.environ.get("APP_ENV") == "Production":
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME':os.environ.get('DB_NAME'),
-            'USER':os.environ.get('DB_USER'),
-            'PASSWORD':os.environ.get('DB_PASS'),
-            'HOST':os.environ.get('DB_HOST'),
-            'PORT':os.environ.get('DB_PORT')
-        }
-    }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -132,7 +120,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+JWT_AUTH = {
+   'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
