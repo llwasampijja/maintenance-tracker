@@ -32,7 +32,7 @@ class MaintainanceRequestsTests(APITestCase):
             self.login_url, login_credentials, format='json')
         self.assertEqual(login_response.status_code, status.HTTP_200_OK)
         self.test_token = login_response.data.get("token")
-        self.auth_header = f'JWT {self.test_token}'
+        self.auth_header = 'JWT {}'.format(self.test_token)
         self.client.post(self.requests_url, data=request_data,
                          HTTP_AUTHORIZATION=self.auth_header, format='json')
 
