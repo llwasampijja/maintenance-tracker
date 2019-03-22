@@ -9,19 +9,26 @@ class UserTests(APITestCase):
     register_url = '/api/v1/auth/register/'
 
     def setUp(self):
+        self.admin_user = User.objects.create_superuser(
+            username="edna", email="edna@gmail.com",  password="password")
+        admin_credentials = { "username":"edna", "password":"password"}
+        admin_login_response = self.client.post(
+            self.login_url, admin_credentials, format='json')
+        admin_test_token = admin_login_response.data.get("token")
+        self.admin_auth_header = 'JWT {}'.format(admin_test_token)
+        
         user_data = {'username': 'lauren', 'email': 'lauren@bolon.com',
                      'password': 'password#1', 'first_name': 'Laura', 'last_name': 'Moon'}
-        self.client.post(self.register_url, user_data, format='json')
         user_data2 = {'username': 'test0', 'email': 'test0@bolon.com',
                       'password': 'password#1', 'first_name': 'Test', 'last_name': 'Zero'}
+        self.client.post(self.register_url, user_data, format='json')
         self.client.post(self.register_url, user_data2, format='json')
-        self.client.login(username='lauren', password='password#1')
         login_credentials = {'username': 'lauren', 'password': 'password#1'}
         login_response = self.client.post(
             self.login_url, login_credentials, format='json')
         self.assertEqual(login_response.status_code, status.HTTP_200_OK)
         self.test_token = login_response.data.get("token")
-        self.auth_header = dict(Authorization='JWT ' + self.test_token),
+        self.auth_header = 'JWT + {}'.format(self.test_token)
 
     def test_login_user(self):
         """
@@ -134,16 +141,16 @@ class UserTests(APITestCase):
         """
         user_url = self.users_url + '2/'
         response = self.client.delete(
-            user_url, headers=self.auth_header, format='json')
+            user_url, HTTP_AUTHORIZATION=self.admin_auth_header, format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_delete_user_not_exist(self):
         """
         Test delete a user by id  who doesnt exist
         """
-        user_url = self.users_url + '3/'
+        user_url = self.users_url + '300/'
         response = self.client.delete(
-            user_url, headers=self.auth_header, format='json')
+            user_url, HTTP_AUTHORIZATION=self.admin_auth_header, format='json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_get_users(self):
@@ -151,19 +158,19 @@ class UserTests(APITestCase):
         Test get users
         """
         response = self.client.get(
-            self.users_url, headers=self.auth_header, format='json')
+            self.users_url, HTTP_AUTHORIZATION=self.admin_auth_header, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue("results" in response.data)
 
     def test_get_users_unauthorised(self):
         """
         Test get users
         """
-        # req_response = self.client.get(self.users_url, format='json')
-        # self.assertEqual(req_response.status_code, status.HTTP_401_UNAUTHORIZED)
-        # response = self.client.get(self.users_url)
-        # self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-        # self.assertTrue("results" in response.data)
-        pass
+        req_response = self.client.get(self.users_url, format='json')
+        self.assertEqual(req_response.status_code, status.HTTP_401_UNAUTHORIZED)
+        response = self.client.get(self.users_url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertFalse("results" in response.data)
 
     def test_get_user(self):
         """
@@ -171,14 +178,14 @@ class UserTests(APITestCase):
         """
         user_url = self.users_url + '2/'
         response = self.client.get(
-            user_url, headers=self.auth_header, format='json')
+            user_url, HTTP_AUTHORIZATION=self.admin_auth_header, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_user_not_exist(self):
         """
         Test get a user by id  who doesnt exist
         """
-        user_url = self.users_url + '3/'
+        user_url = self.users_url + '300/'
         response = self.client.get(
-            user_url, headers=self.auth_header, format='json')
+            user_url, HTTP_AUTHORIZATION=self.admin_auth_header, format='json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
