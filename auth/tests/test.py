@@ -15,7 +15,7 @@ class UserTests(APITestCase):
         admin_login_response = self.client.post(
             self.login_url, admin_credentials, format='json')
         admin_test_token = admin_login_response.data.get("token")
-        self.admin_auth_header = f'JWT {admin_test_token}'
+        self.admin_auth_header = 'JWT {}'.format(admin_test_token)
         
         user_data = {'username': 'lauren', 'email': 'lauren@bolon.com',
                      'password': 'password#1', 'first_name': 'Laura', 'last_name': 'Moon'}
@@ -28,7 +28,7 @@ class UserTests(APITestCase):
             self.login_url, login_credentials, format='json')
         self.assertEqual(login_response.status_code, status.HTTP_200_OK)
         self.test_token = login_response.data.get("token")
-        self.auth_header = f'JWT + {self.test_token}'
+        self.auth_header = 'JWT + {}'.format(self.test_token)
 
     def test_login_user(self):
         """
@@ -171,7 +171,6 @@ class UserTests(APITestCase):
         response = self.client.get(self.users_url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertFalse("results" in response.data)
-        # pass
 
     def test_get_user(self):
         """
