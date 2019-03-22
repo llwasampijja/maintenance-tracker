@@ -11,12 +11,12 @@ class MaintainanceRequestsTests(APITestCase):
     def setUp(self):
         self.admin_user = User.objects.create_superuser(
             username="edna", email="edna@gmail.com",  password="password")
-        user_data = {'username': 'lauren',
-                     'email': 'lauren@bolon.com', 'password': 'password#1'}
+        user_data = {'username': 'lauren', 'email': 'lauren@bolon.com',
+                     'password': 'password#1', 'first_name': 'Laura', 'last_name': 'Moon'}
         self.status = {"status": "rejected"}
         self.client.post(self.register_url, user_data, format='json')
-        user_data2 = {'username': 'test0',
-                      'email': 'test0@bolon.com', 'password': 'password#1'}
+        user_data2 = {'username': 'test0', 'email': 'test0@bolon.com',
+                      'password': 'password#1', 'first_name': 'Test', 'last_name': 'Zero'}
         self.client.post(self.register_url, user_data2, format='json')
         self.client.login(username='lauren', password='password#1')
         login_credentials = {'username': 'lauren', 'password': 'password#1'}
