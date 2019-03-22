@@ -171,7 +171,6 @@ class UserTests(APITestCase):
         response = self.client.get(self.users_url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertFalse("results" in response.data)
-        # pass
 
     def test_get_user(self):
         """
