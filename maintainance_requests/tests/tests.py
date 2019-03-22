@@ -15,7 +15,7 @@ class MaintainanceRequestsTests(APITestCase):
         admin_login_response = self.client.post(
             self.login_url, admin_credentials, format='json')
         admin_test_token = admin_login_response.data.get("token")
-        self.admin_auth_header = f'JWT {admin_test_token}'
+        self.admin_auth_header = 'JWT {}'.format(admin_test_token)
 
         user_data = {'username': 'lauren', 'email': 'lauren@bolon.com',
                      'password': 'password#1', 'first_name': 'Laura', 'last_name': 'Moon'}
