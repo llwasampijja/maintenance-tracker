@@ -1,6 +1,5 @@
 from django.db import models
 
-from compositefk.fields import CompositeForeignKey
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -8,8 +7,6 @@ from rest_framework.serializers import HyperlinkedModelSerializer, PrimaryKeyRel
 
 
 class MaintainanceRequest(models.Model):
-    # author = PrimaryKeyRelatedField(
-    #     read_only=True, default=CurrentUserDefault())
     request_title = models.CharField(max_length=100)
     request_description = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
