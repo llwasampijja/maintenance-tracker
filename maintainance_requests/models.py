@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 
 from django.utils import timezone
@@ -13,6 +14,7 @@ class MaintainanceRequest(models.Model):
     comment = models.TextField(blank=True)
     status = models.CharField(max_length=20, default='pending')
     author = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, null=True,related_name="maintenancerequests")
+    request_uuid = models.CharField(max_length=100, default=str(uuid.uuid4()))
 
     def __str__(self):
         return self.request_title

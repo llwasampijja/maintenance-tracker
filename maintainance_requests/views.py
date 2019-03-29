@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from maintainance_requests.models import MaintainanceRequest
 from maintainance_requests.serializers import MaintainanceRequestSerializer
 from rest_framework.viewsets import ModelViewSet
@@ -18,6 +18,7 @@ class MaintainanceRequestViewSet(ModelViewSet):
     filter_backends = (SearchFilter, OrderingFilter)
     filter_fields = ('request_title', 'request_description','status')
     search_fields = ('request_title', 'request_description', 'author__username', 'status')
+    lookup_field = ('request_uuid')
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -47,4 +48,10 @@ class MaintainanceRequestViewSet(ModelViewSet):
             if my_search:
                 queryset = self.filter_queryset(queryset)
         serializer = MaintainanceRequestSerializer(queryset, many=True,context={'request': request})
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = MaintainanceRequest.objects.filter(request_uuid=pk)
+        contact = get_object_or_404(queryset, pk=1)
+        serializer = MaintainanceRequestSerializer(contact, context={'request': request})
         return Response(serializer.data)

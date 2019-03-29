@@ -16,5 +16,7 @@ class MaintainanceRequestSerializer(HyperlinkedModelSerializer):
 
     class Meta:
         model = MaintainanceRequest
-        fields = ('url', 'request_title', 'request_description',
+        fields = ('url', 'request_uuid', 'request_title', 'request_description',
                   'date_posted', 'author', 'comment', 'status')
+        extra_kwargs = {'url': {'lookup_field': 'request_uuid'}}
+
